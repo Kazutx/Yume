@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>YUME</title>
+    <style>
+        body { background-color: black; color: white; font-family: sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: space-between; height: 100vh; margin: 0; overflow: hidden; padding: 20px; box-sizing: border-box; }
+        .content-top { text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; flex-grow: 1; width: 100%; }
+        h1 { font-size: 3.5rem; color: #ff007f; text-shadow: 0 0 20px #ff007f; margin: 0; text-transform: uppercase; }
+        .greeting { font-size: 1.2rem; margin: 10px 0 25px 0; }
+        h2 { font-size: 1.6rem; color: #00d4ff; text-shadow: 0 0 10px #00d4ff; margin: 0 0 15px 0; text-transform: uppercase; }
+        .status { font-size: 0.95rem; color: #00ff88; margin-bottom: 35px; }
+        .thinking { font-size: 1.1rem; opacity: 0.6; }
+        .chat-area { width: 100%; background: rgba(255, 255, 255, 0.1); padding: 10px; border-radius: 25px; border: 1px solid rgba(255, 255, 255, 0.2); display: flex; align-items: center; box-sizing: border-box; margin-bottom: 20px; }
+        .chat-input { flex-grow: 1; background: transparent; border: none; color: white; padding: 10px; outline: none; }
+        .send-button { background: #00d4ff; color: black; border: none; padding: 10px 20px; border-radius: 15px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="content-top">
+        <h1>YUME</h1>
+        <p class="greeting">Hola, Padre.</p>
+        <h2>SISTEMA ACTIVO</h2>
+        <p class="status">[ Conectado página web ]</p>
+        <p class="thinking">Pensando...</p>
+    </div>
+    <div class="chat-area">
+        <input type="text" class="chat-input" placeholder="¿Qué necesitas hoy?">
+        <button class="send-button">ENVIAR</button>
+    </div>
+</body>
+</html>
