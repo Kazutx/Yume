@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>YUME</title>
+    <style>
+        /* Base del cuerpo para evitar recortes */
+        body, html {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Contenido central que se ajusta automáticamente */
+        .main-display {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .title {
+            font-size: 60px;
+            font-weight: bold;
+            color: #ff007f;
+            text-shadow: 0 0 20px #ff007f, 0 0 40px #ff007f;
+            margin: 0;
+        }
+
+        .greeting { font-size: 20px; margin: 10px 0; opacity: 0.9; }
+
+        .status-box {
+            font-size: 28px;
+            font-weight: bold;
+            color: #00d4ff;
+            text-shadow: 0 0 15px #00d4ff;
+            margin: 5px 0;
+            text-transform: uppercase;
+        }
+
+        .info-tag { color: #00ff88; font-size: 14px; margin-bottom: 20px; }
+        .wait-text { color: #333333; font-size: 18px; }
+
+        /* AREA DE ENTRADA: Elevada para evitar recortes del navegador */
+        .input-area {
+            width: 100%;
+            padding-bottom: 60px; /* Espacio extra muy grande para que suba la barra */
+            display: flex;
+            justify-content: center;
+            background: #000;
+        }
+
+        .pill {
+            width: 90%;
+            max-width: 400px;
+            background: #151515;
+            border-radius: 50px;
+            border: 1px solid #252525;
+            padding: 5px 5px 5px 20px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+
+        input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 16px;
+            outline: none;
+            height: 45px;
+        }
+
+        .send-btn {
+            background-color: #00d4ff;
+            color: #000000;
+            border: none;
+            padding: 0 25px;
+            height: 40px;
+            border-radius: 25px;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 13px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-display">
+        <h1 class="title">YUME</h1>
+        <p class="greeting">Hola, Padre.</p>
+        <div class="status-box">SISTEMA ACTIVO</div>
+        <p class="info-tag">[ Conectado página web ]</p>
+        <div class="wait-text">Pensando...</div>
+    </div>
+
+    <div class="input-area">
+        <div class="pill">
+            <input type="text" placeholder="¿Qué necesitas hoy?">
+            <button class="send-btn">ENVIAR</button>
+        </div>
+    </div>
+
+</body>
+</html>
