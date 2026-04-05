@@ -3,187 +3,192 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>YUME - Sistema Integrado</title>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <title>YUME - Sistema Inteligente</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
     <style>
-        :root {
-            --neon-pink: #ff007f;
-            --neon-cyan: #00d4ff;
-            --bg-black: #000000;
-        }
-
-        body { 
-            background-color: var(--bg-black); 
-            color: white; 
-            font-family: 'Segoe UI', Roboto, sans-serif; 
-            margin: 0; 
-            height: 100vh; 
-            display: flex; 
-            flex-direction: column; 
+        body, html {
+            margin: 0; padding: 0;
+            width: 100%; height: 100%;
+            background-color: black;
+            font-family: 'Segoe UI', sans-serif;
             overflow: hidden;
         }
 
-        /* --- MODO CHAT --- */
-        #chat-interface {
-            flex: 1;
+        /* --- INTERFAZ 1: ENTRADA (CHAT) --- */
+        #pantalla-chat {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding-bottom: 120px; /* Espacio para no chocar con botones */
-        }
-
-        h1 { 
-            font-size: 4rem; 
-            color: var(--neon-pink); 
-            text-shadow: 0 0 20px var(--neon-pink); 
-            margin: 0; 
-        }
-
-        .status-box { text-align: center; margin-top: 10px; }
-        .status-main { color: var(--neon-cyan); font-weight: bold; font-size: 1.5rem; text-shadow: 0 0 10px var(--neon-cyan); }
-        .status-sub { color: #00ff88; font-size: 0.9rem; display: block; margin-top: 5px; }
-
-        /* Barra de Chat Flotante */
-        .chat-container {
+            height: 100%;
+            width: 100%;
             position: absolute;
-            bottom: 130px; /* Arriba de los botones principales */
+            z-index: 2;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .yume-logo {
+            font-size: 4.5rem;
+            color: #ff007f;
+            text-shadow: 0 0 25px #ff007f;
+            margin: 0;
+            font-weight: bold;
+        }
+
+        .hola-padre { font-size: 1.5rem; color: white; margin: 10px 0; }
+
+        .sistema-activo {
+            color: #00d4ff;
+            font-size: 1.8rem;
+            text-shadow: 0 0 15px #00d4ff;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        .conectado { color: #00ff88; font-size: 1rem; margin-top: 10px; }
+
+        /* Barra de Chat Estilo App */
+        .input-box {
+            position: absolute;
+            bottom: 30px;
             width: 90%;
-            left: 5%;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 30px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50px;
+            padding: 10px 20px;
             display: flex;
             align-items: center;
-            padding: 5px 15px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255,255,255,0.2);
             backdrop-filter: blur(10px);
         }
 
-        .chat-input {
+        .input-box input {
             flex: 1;
             background: transparent;
             border: none;
             color: white;
-            padding: 12px;
-            outline: none;
             font-size: 16px;
+            outline: none;
         }
 
-        /* Botoncito Azul de Enviar / Cambio */
-        .btn-send {
-            background: var(--neon-cyan);
-            color: black;
-            border: none;
-            width: 40px;
-            height: 40px;
+        /* EL BOTÓN AZUL QUE PEDISTE */
+        .btn-azul {
+            background: #00d4ff;
+            width: 45px;
+            height: 45px;
             border-radius: 50%;
+            border: none;
             display: flex;
             align-items: center;
             justify-content: center;
+            box-shadow: 0 0 15px #00d4ff;
             cursor: pointer;
-            box-shadow: 0 0 10px var(--neon-cyan);
         }
 
-        /* --- MODO VISIÓN --- */
-        #vision-interface {
-            display: none;
-            height: 100%;
+        /* --- INTERFAZ 2: VISIÓN (CÁMARA) --- */
+        #pantalla-vision {
+            display: none; /* Oculta al principio */
             flex-direction: column;
             align-items: center;
-            padding-top: 20px;
+            height: 100%;
+            width: 100%;
+            background: black;
+            position: absolute;
+            z-index: 3;
         }
 
-        .camera-box {
+        .yume-small {
+            color: #ff007f;
+            font-size: 2rem;
+            margin-top: 20px;
+            text-shadow: 0 0 10px #ff007f;
+        }
+
+        /* CUADRO DE CÁMARA GRANDE Y SEPARADO */
+        .cam-frame {
             width: 90%;
-            flex: 0.85; /* Cuadro largo */
-            border: 2px solid var(--neon-cyan);
-            border-radius: 25px;
+            flex-grow: 0.8;
+            margin: 20px 0;
+            border: 2px solid #00d4ff;
+            border-radius: 20px;
             overflow: hidden;
-            position: relative;
-            box-shadow: 0 0 20px rgba(0, 212, 255, 0.4);
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.3);
+            background: #111;
         }
 
         video { width: 100%; height: 100%; object-fit: cover; }
 
-        /* --- BARRA INFERIOR DE BOTONES --- */
-        .nav-bar {
-            position: absolute;
-            bottom: 25px;
-            width: 90%;
-            left: 5%;
-            display: flex;
-            justify-content: space-around;
-            padding: 15px 0;
-            background: rgba(20, 20, 20, 0.8);
-            border-radius: 40px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .nav-btn {
+        /* Botón para volver atrás (Cerrar Cámara) */
+        .btn-cerrar {
             width: 60px;
             height: 60px;
+            background: rgba(255,255,255,0.1);
+            border: 2px solid #00d4ff;
             border-radius: 50%;
-            border: 2px solid var(--neon-cyan);
+            color: white;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: transparent;
+            margin-bottom: 30px;
         }
-
-        .nav-btn.active { border-color: var(--neon-pink); box-shadow: 0 0 15px var(--neon-pink); }
-        .nav-btn i { font-size: 30px; color: white; }
 
     </style>
 </head>
 <body>
 
-    <div id="chat-interface">
-        <h1>YUME</h1>
-        <p>Hola, Padre.</p>
-        <div class="status-box">
-            <span class="status-main">SISTEMA ACTIVO</span>
-            <span class="status-sub">[ Conectado página web ]</span>
-        </div>
+    <div id="pantalla-chat">
+        <h1 class="yume-logo">YUME</h1>
+        <p class="hola-padre">Hola, Padre.</p>
         
-        <div class="chat-container">
-            <input type="text" class="chat-input" placeholder="¿Qué necesitas hoy?">
-            <button class="btn-send" onclick="toggleInterface()">
-                <i class="material-icons">send</i>
+        <div class="sistema-activo">SISTEMA ACTIVO</div>
+        <p class="conectado">[ Conectado página web ]</p>
+
+        <div class="input-box">
+            <input type="text" placeholder="¿Qué necesitas hoy?">
+            <button class="btn-azul" onclick="abrirVision()">
+                <i class="material-icons-round" style="color: black;">visibility</i>
             </button>
         </div>
     </div>
 
-    <div id="vision-interface">
-        <h1 style="font-size: 2rem;">YUME</h1>
-        <div class="camera-box">
+    <div id="pantalla-vision">
+        <h2 class="yume-small">YUME</h2>
+        <div style="color: white; opacity: 0.7;">[ Escuchando ]</div>
+        
+        <div class="cam-frame">
             <video id="webcam" autoplay playsinline></video>
         </div>
-    </div>
 
-    <div class="nav-bar">
-        <div class="nav-btn" onclick="location.reload()"><i class="material-icons">chat</i></div>
-        <div class="nav-btn active" onclick="toggleInterface()"><i class="material-icons">visibility</i></div>
-        <div class="nav-btn"><i class="material-icons">settings</i></div>
-        <div class="nav-btn"><i class="material-icons">power_settings_new</i></div>
+        <button class="btn-cerrar" onclick="cerrarVision()">
+            <i class="material-icons-round">close</i>
+        </button>
     </div>
 
     <script>
+        const chat = document.getElementById('pantalla-chat');
+        const vision = document.getElementById('pantalla-vision');
+        const video = document.getElementById('webcam');
         let stream = null;
-        async function toggleInterface() {
-            const chat = document.getElementById('chat-interface');
-            const vision = document.getElementById('vision-interface');
-            const video = document.getElementById('webcam');
 
-            if (chat.style.display !== 'none') {
+        async function abrirVision() {
+            // Animación para quitar la primera interfaz
+            chat.style.transform = 'translateY(-100%)';
+            setTimeout(async () => {
                 chat.style.display = 'none';
                 vision.style.display = 'flex';
+                
+                // Iniciar cámara
                 try {
                     stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } });
                     video.srcObject = stream;
-                } catch (e) { alert("Error de cámara"); }
-            } else {
-                location.reload();
-            }
+                } catch (e) {
+                    alert("Error al abrir cámara");
+                }
+            }, 500);
+        }
+
+        function cerrarVision() {
+            // Volver a la primera interfaz
+            location.reload(); // Recarga para limpiar todo y volver al inicio
         }
     </script>
 </body>
