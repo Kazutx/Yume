@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>YUME</title>
+    <style>
+        body, html {
+            background-color: #000;
+            color: #fff;
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            margin: 0; padding: 0;
+            height: 100%; width: 100%;
+            display: flex; flex-direction: column;
+            overflow: hidden;
+        }
+
+        .main-container {
+            flex: 1;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            text-align: center;
+        }
+
+        .yume-logo { font-size: 60px; font-weight: bold; color: #ff007f; text-shadow: 0 0 20px #ff007f; margin: 0; }
+        .greeting { font-size: 20px; margin: 10px 0; }
+        .status { font-size: 28px; font-weight: bold; color: #00d4ff; text-shadow: 0 0 15px #00d4ff; text-transform: uppercase; }
+        .web-tag { color: #00ff88; font-size: 15px; margin-bottom: 20px; }
+        .think { color: #333; font-size: 18px; }
+
+        /* BARRA CORREGIDA */
+        .footer {
+            width: 100%;
+            padding-bottom: 40px; /* Bajamos la barra un poco más */
+            display: flex; justify-content: center;
+        }
+
+        .pill-container {
+            width: 90%;
+            max-width: 380px;
+            background: #151515;
+            border-radius: 40px;
+            border: 1px solid #222;
+            padding: 4px 6px 4px 18px; /* Más espacio a la izquierda para que no pegue el texto */
+            display: flex;
+            align-items: center;
+        }
+
+        input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-size: 15px; /* Texto un poco más pequeño para que respire */
+            outline: none;
+            height: 40px;
+        }
+
+        /* BOTÓN MÁS PEQUEÑO */
+        .btn-send {
+            background-color: #00d4ff;
+            color: #000;
+            border: none;
+            padding: 8px 18px; /* Reducido */
+            border-radius: 25px;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 12px; /* Letra más pequeña */
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-container">
+        <h1 class="yume-logo">YUME</h1>
+        <p class="greeting">Hola, Padre.</p>
+        <div class="status">SISTEMA ACTIVO</div>
+        <p class="web-tag">[ Conectado página web ]</p>
+        <div class="think">Pensando...</div>
+    </div>
+
+    <div class="footer">
+        <div class="pill-container">
+            <input type="text" id="userInput" placeholder="¿Qué necesitas hoy?">
+            <button class="btn-send" onclick="checkAccess()">ENVIAR</button>
+        </div>
+    </div>
+
+    <script>
+        // Restableciendo tu contraseña anterior
+        function checkAccess() {
+            const input = document.getElementById('userInput').value;
+            // Aquí va la lógica de tu contraseña previa
+            if(input === "ALMA") { 
+                alert("Acceso concedido, Padre.");
+            } else if (input.trim() !== "") {
+                console.log("Mensaje enviado: " + input);
+            }
+        }
+    </script>
+
+</body>
+</html>
