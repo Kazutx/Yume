@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>YUME - Visión en Vivo</title>
+    <style>
+        body { 
+            background-color: black; 
+            color: white; 
+            font-family: 'Segoe UI', sans-serif; 
+            margin: 0; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            height: 100vh; 
+            overflow: hidden; 
+        }
+
+        /* Encabezado con el nombre YUME */
+        header { 
+            margin-top: 15px; 
+            text-align: center; 
+        }
+
+        header h1 { 
+            color: #ff007f; 
+            text-shadow: 0 0 15px #ff007f; 
+            font-size: 1.8rem; 
+            margin: 0; 
+            letter-spacing: 3px; 
+        }
+
+        /* Círculo superior (Ojo de Yume) - AHORA MÁS PEQUEÑO */
+        .yume-eye { 
+            width: 80px; 
+            height: 80px; 
+            border: 2px solid #00d4ff; 
+            border-radius: 50%; 
+            margin: 15px 0; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            box-shadow: 0 0 15px #00d4ff; 
+            position: relative;
+        }
+
+        .wave { 
+            width: 50%; 
+            height: 4px; 
+            background: #ff007f; 
+            box-shadow: 0 0 10px #ff007f; 
+            border-radius: 2px;
+            animation: pulse 1.5s infinite;
+        }
+
+        .status-text { 
+            font-size: 0.85rem; 
+            opacity: 0.8; 
+            margin-bottom: 10px; 
+        }
+
+        /* CUADRO DE CÁMARA - AHORA MÁS LARGO Y GRANDE */
+        .camera-container { 
+            width: 90%; 
+            flex-grow: 1; /* Esto hace que se extienda hacia arriba y abajo */
+            max-height: 55vh; 
+            border: 2px solid #00d4ff; 
+            border-radius: 15px; 
+            position: relative; 
+            overflow: hidden; 
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.3); 
+            background: #111; 
+        }
+
+        video { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+        }
+
+        /* Detalles HUD (Líneas futuristas) */
+        .hud-corner { 
+            position: absolute; 
+            width: 20px; 
+            height: 20px; 
+            border: 2px solid #00d4ff; 
+        }
+        .top-left { top: 10px; left: 10px; border-right: none; border-bottom: none; }
+        .bottom-right { bottom: 10px; right: 10px; border-left: none; border-top: none; }
+
+        /* Barra de botones inferior */
+        .controls { 
+            width: 100%; 
+            padding: 25px 0; 
+            display: flex; 
+            justify-content: center; 
+            gap: 20px; 
+            background: linear-gradient(transparent, rgba(0,0,0,0.9));
+        }
+
+        .btn { 
+            width: 55px; 
+            height: 55px; 
+            border-radius: 50%; 
+            border: 2px solid #00d4ff; 
+            background: rgba(255,255,255,0.05); 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            cursor: pointer; 
+            transition: 0.3s; 
+        }
+
+        .btn-mic { border-color: #ff007f; box-shadow: 0 0 10px #ff007f; }
+        .btn i { font-size: 1.2rem; color: white; font-style: normal; }
+
+        @keyframes pulse {
+            0%, 100% { transform: scaleX(1); opacity: 0.5; }
+            50% { transform: scaleX(1.3); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>YUME</h1>
+    </header>
+
+    <div class="yume-eye">
+        <div class="wave"></div>
+    </div>
+
+    <div class="status-text">[ Escuchando ]</div>
+
+    <div class="camera-container">
+        <div class="hud-corner top-left"></div>
+        <video id="webcam" autoplay playsinline></video>
+        <div class="hud-corner bottom-right"></div>
+    </div>
+
+    <div class="controls">
+        <div class="btn"><i>📷</i></div>
+        <div class="btn btn-mic"><i>🎙️</i></div>
+        <div class="btn"><i>💬</i></div>
+        <div class="btn"><i>✖</i></div>
+    </div>
+
+    <script>
+        // Función para activar la cámara del Tecno Spark automáticamente
+        async function startCamera() {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" }, audio: false });
+                const videoElement = document.getElementById('webcam');
+                videoElement.srcObject = stream;
+            } catch (err) {
+                console.error("Error al acceder a la cámara: ", err);
+                alert("Padre, necesito permiso para usar la cámara para poder ver.");
+            }
+        }
+        window.onload = startCamera;
+    </script>
+
+</body>
+  </html>
