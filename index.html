@@ -3,192 +3,339 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>YUME - Sistema Inteligente</title>
+    <title>YUME - Sistema Integrado</title>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
     <style>
-        body, html {
-            margin: 0; padding: 0;
-            width: 100%; height: 100%;
-            background-color: black;
-            font-family: 'Segoe UI', sans-serif;
-            overflow: hidden;
+        :root {
+            --neon-pink: #ff007f;
+            --neon-cyan: #00d4ff;
+            --bg-black: #000000;
+            --text-white: #ffffff;
         }
 
-        /* --- INTERFAZ 1: ENTRADA (CHAT) --- */
-        #pantalla-chat {
+        body { 
+            background-color: var(--bg-black); 
+            color: var(--text-white); 
+            font-family: 'Segoe UI', Roboto, sans-serif; 
+            margin: 0; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            height: 100vh; 
+            overflow: hidden; 
+            padding: 20px; 
+            box-sizing: border-box; 
+        }
+
+        /* --- INTERFAZ 1: CHAT (PREDETERMINADA) --- */
+        #chat-interface {
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start;
             height: 100%;
             width: 100%;
-            position: absolute;
-            z-index: 2;
-            transition: transform 0.5s ease-in-out;
+            transition: opacity 0.5s ease;
         }
 
-        .yume-logo {
-            font-size: 4.5rem;
-            color: #ff007f;
-            text-shadow: 0 0 25px #ff007f;
-            margin: 0;
-            font-weight: bold;
-        }
-
-        .hola-padre { font-size: 1.5rem; color: white; margin: 10px 0; }
-
-        .sistema-activo {
-            color: #00d4ff;
-            font-size: 1.8rem;
-            text-shadow: 0 0 15px #00d4ff;
-            font-weight: bold;
+        /* Sección Superior: Título y Onda Rosa */
+        .content-top { 
+            text-align: center; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+            width: 100%; 
             margin-top: 20px;
+            margin-bottom: auto; /* Empuja el chat hacia abajo */
         }
 
-        .conectado { color: #00ff88; font-size: 1rem; margin-top: 10px; }
-
-        /* Barra de Chat Estilo App */
-        .input-box {
-            position: absolute;
-            bottom: 30px;
-            width: 90%;
-            background: rgba(255,255,255,0.1);
-            border-radius: 50px;
-            padding: 10px 20px;
-            display: flex;
-            align-items: center;
-            border: 1px solid rgba(255,255,255,0.2);
-            backdrop-filter: blur(10px);
+        h1 { 
+            font-size: 3.5rem; 
+            color: var(--neon-pink); 
+            text-shadow: 0 0 20px var(--neon-pink); 
+            margin: 0; 
+            text-transform: uppercase; 
+            letter-spacing: 2px; 
         }
 
-        .input-box input {
-            flex: 1;
+        .greeting { font-size: 1.2rem; margin: 10px 0 25px 0; opacity: 0.9; }
+
+        h2 { 
+            font-size: 1.6rem; 
+            color: var(--neon-cyan); 
+            text-shadow: 0 0 10px var(--neon-cyan); 
+            margin: 0 0 15px 0; 
+            text-transform: uppercase; 
+        }
+
+        .status { font-size: 0.9rem; color: #00ff88; margin-bottom: 35px; }
+
+        .thinking { font-size: 1.1rem; opacity: 0.6; animation: pulse 2s infinite; }
+
+        /* BARRA DE CHAT UNIFICADA Y SEPARADA DE ABAJO */
+        .chat-area { 
+            width: 100%; 
+            background: rgba(255, 255, 255, 0.08); 
+            padding: 8px 15px; 
+            border-radius: 30px; 
+            border: 1px solid rgba(255, 255, 255, 0.15); 
+            display: flex; 
+            align-items: center; 
+            box-sizing: border-box; 
+            margin-bottom: 110px; /* Espacio para que no choque con botones */
+            backdrop-filter: blur(10px); 
+        }
+
+        .chat-input { 
+            flex-grow: 1; 
+            background: transparent; 
+            border: none; 
+            color: var(--text-white); 
+            padding: 10px; 
+            outline: none; 
+            font-size: 16px; 
+        }
+
+        /* Botones dentro de la barra de chat */
+        .chat-buttons { display: flex; align-items: center; gap: 10px; }
+
+        /* Botón Ojo (Visión) */
+        .btn-eye {
             background: transparent;
             border: none;
-            color: white;
-            font-size: 16px;
-            outline: none;
-        }
-
-        /* EL BOTÓN AZUL QUE PEDISTE */
-        .btn-azul {
-            background: #00d4ff;
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            border: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 0 15px #00d4ff;
             cursor: pointer;
+            color: var(--neon-cyan);
+            text-shadow: 0 0 10px var(--neon-cyan);
+        }
+        .btn-eye i { font-size: 28px; }
+
+        /* Botón ENVIAR (Cian brillante) */
+        .send-button { 
+            background: var(--neon-cyan); 
+            color: var(--bg-black); 
+            border: none; 
+            padding: 10px 20px; 
+            border-radius: 20px; 
+            font-weight: bold; 
+            text-transform: uppercase; 
+            cursor: pointer;
+            box-shadow: 0 0 15px var(--neon-cyan);
         }
 
-        /* --- INTERFAZ 2: VISIÓN (CÁMARA) --- */
-        #pantalla-vision {
-            display: none; /* Oculta al principio */
+        /* --- INTERFAZ 2: VISIÓN (MODO CÁMARA - OCULTA POR DEFECTO) --- */
+        #vision-interface {
+            display: none; /* Oculta */
             flex-direction: column;
             align-items: center;
+            justify-content: flex-start;
             height: 100%;
             width: 100%;
-            background: black;
+            opacity: 0;
+            transition: opacity 0.5s ease;
             position: absolute;
-            z-index: 3;
+            top: 0;
+            left: 0;
+            padding: 20px;
+            box-sizing: border-box;
+            z-index: 10;
         }
 
-        .yume-small {
-            color: #ff007f;
-            font-size: 2rem;
-            margin-top: 20px;
-            text-shadow: 0 0 10px #ff007f;
-        }
+        /* Título YUME más pequeño en modo visión */
+        #vision-interface h1 { font-size: 2rem; margin-top: 10px; }
 
-        /* CUADRO DE CÁMARA GRANDE Y SEPARADO */
-        .cam-frame {
-            width: 90%;
-            flex-grow: 0.8;
+        /* Contenedor de video largo y grande */
+        .camera-container { 
+            width: 100%; 
+            flex-grow: 1; /* Se estira hacia abajo */
+            max-height: 70vh; /* Ocupa la mayor parte */
+            border: 2px solid var(--neon-cyan); 
+            border-radius: 20px; 
+            position: relative; 
+            overflow: hidden; 
+            box-shadow: 0 0 25px rgba(0, 212, 255, 0.4); 
+            background: #111; 
             margin: 20px 0;
-            border: 2px solid #00d4ff;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 0 30px rgba(0, 212, 255, 0.3);
-            background: #111;
         }
 
-        video { width: 100%; height: 100%; object-fit: cover; }
+        video { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; /* Llena el cuadro */
+        }
 
-        /* Botón para volver atrás (Cerrar Cámara) */
-        .btn-cerrar {
-            width: 60px;
-            height: 60px;
-            background: rgba(255,255,255,0.1);
-            border: 2px solid #00d4ff;
+        /* Detalles HUD (Líneas futuristas) */
+        .hud-corner { 
+            position: absolute; 
+            width: 30px; 
+            height: 30px; 
+            border: 3px solid var(--neon-cyan); 
+        }
+        .top-left { top: 15px; left: 15px; border-right: none; border-bottom: none; }
+        .bottom-right { bottom: 15px; right: 15px; border-left: none; border-top: none; }
+
+        /* --- BARRA DE NAVEGACIÓN INFERIOR UNIFICADA --- */
+        .nav-bar {
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 15px 0;
+            background: rgba(20, 20, 20, 0.8);
+            border-radius: 35px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            z-index: 20;
+        }
+
+        /* Botones redondos profesionales (Estilo Manzana) */
+        .nav-btn {
+            width: 55px;
+            height: 55px;
             border-radius: 50%;
-            color: white;
+            border: 2px solid var(--neon-cyan);
+            background: rgba(255, 255, 255, 0.03);
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 10px rgba(0, 212, 255, 0.2);
         }
+
+        /* Iconos rellenos y limpios */
+        .nav-btn i {
+            font-size: 28px;
+            color: var(--neon-cyan);
+        }
+
+        /* Botón activo (Muestra dónde estás) */
+        .nav-btn.active {
+            border-color: var(--neon-pink);
+            box-shadow: 0 0 15px var(--neon-pink);
+            background: rgba(255, 0, 127, 0.1);
+        }
+        
+        .nav-btn.active i { color: var(--neon-pink); }
+
+        /* Efecto al presionar */
+        .nav-btn:active { transform: scale(0.9); }
+
+        /* Animaciones */
+        @keyframes pulse { 0%, 100% { opacity: 0.3; } 50% { opacity: 0.8; } }
 
     </style>
 </head>
 <body>
 
-    <div id="pantalla-chat">
-        <h1 class="yume-logo">YUME</h1>
-        <p class="hola-padre">Hola, Padre.</p>
+    <div id="chat-interface">
+        <div class="content-top">
+            <h1>YUME</h1>
+            <p class="greeting">Hola, Padre.</p>
+            <h2>SISTEMA ACTIVO</h2>
+            <p class="status">[ Conectado página web ]</p>
+            <p class="thinking">Pensando...</p>
+        </div>
         
-        <div class="sistema-activo">SISTEMA ACTIVO</div>
-        <p class="conectado">[ Conectado página web ]</p>
-
-        <div class="input-box">
-            <input type="text" placeholder="¿Qué necesitas hoy?">
-            <button class="btn-azul" onclick="abrirVision()">
-                <i class="material-icons-round" style="color: black;">visibility</i>
-            </button>
+        <div class="chat-area">
+            <input type="text" class="chat-input" placeholder="¿Qué necesitas hoy?">
+            <div class="chat-buttons">
+                <button class="btn-eye" onclick="showInterface('vision')">
+                    <i class="material-icons-round">visibility</i>
+                </button>
+                <button class="send-button">ENVIAR</button>
+            </div>
         </div>
     </div>
 
-    <div id="pantalla-vision">
-        <h2 class="yume-small">YUME</h2>
-        <div style="color: white; opacity: 0.7;">[ Escuchando ]</div>
-        
-        <div class="cam-frame">
+    <div id="vision-interface">
+        <h1>YUME</h1>
+        <div style="color: var(--text-white); opacity: 0.7;">[ Escuchando ]</div>
+        <div class="camera-container">
+            <div class="hud-corner top-left"></div>
             <video id="webcam" autoplay playsinline></video>
+            <div class="hud-corner bottom-right"></div>
         </div>
+    </div>
 
-        <button class="btn-cerrar" onclick="cerrarVision()">
-            <i class="material-icons-round">close</i>
-        </button>
+    <div class="nav-bar">
+        <div id="nav-chat" class="nav-btn active" onclick="showInterface('chat')">
+            <i class="material-icons-round">chat_bubble</i>
+        </div>
+        
+        <div id="nav-vision" class="nav-btn" onclick="showInterface('vision')">
+            <i class="material-icons-round">visibility</i>
+        </div>
+        
+        <div class="nav-btn">
+            <i class="material-icons-round">settings</i>
+        </div>
+        
+        <div class="nav-btn" onclick="showInterface('chat')">
+            <i class="material-icons-round">power_settings_new</i>
+        </div>
     </div>
 
     <script>
-        const chat = document.getElementById('pantalla-chat');
-        const vision = document.getElementById('pantalla-vision');
-        const video = document.getElementById('webcam');
-        let stream = null;
+        const chatInterface = document.getElementById('chat-interface');
+        const visionInterface = document.getElementById('vision-interface');
+        const videoElement = document.getElementById('webcam');
+        const navChat = document.getElementById('nav-chat');
+        const navVision = document.getElementById('nav-vision');
+        let cameraStream = null;
 
-        async function abrirVision() {
-            // Animación para quitar la primera interfaz
-            chat.style.transform = 'translateY(-100%)';
-            setTimeout(async () => {
-                chat.style.display = 'none';
-                vision.style.display = 'flex';
+        // Función para cambiar entre interfaces y gestionar la cámara
+        async function showInterface(mode) {
+            if (mode === 'vision') {
+                // Ocultar chat, mostrar visión
+                chatInterface.style.display = 'none';
+                visionInterface.style.display = 'flex';
+                setTimeout(() => visionInterface.style.opacity = 1, 10);
                 
-                // Iniciar cámara
+                // Actualizar barra de navegación
+                navChat.classList.remove('active');
+                navVision.classList.add('active');
+                
+                // Activar cámara automáticamente (Arreglado el error)
                 try {
-                    stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } });
-                    video.srcObject = stream;
-                } catch (e) {
-                    alert("Error al abrir cámara");
+                    // Intenta usar la cámara trasera (environment)
+                    cameraStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" }, audio: false });
+                    videoElement.srcObject = cameraStream;
+                } catch (err) {
+                    console.error("Error cámara trasera:", err);
+                    try {
+                        // Si falla, intenta con cualquier cámara disponible
+                        cameraStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+                        videoElement.srcObject = cameraStream;
+                    } catch (err2) {
+                        console.error("Error total cámara:", err2);
+                        alert("Padre, no puedo acceder a ninguna cámara. Revisa los permisos.");
+                    }
                 }
-            }, 500);
-        }
-
-        function cerrarVision() {
-            // Volver a la primera interfaz
-            location.reload(); // Recarga para limpiar todo y volver al inicio
+            } else if (mode === 'chat') {
+                // Ocultar visión, mostrar chat
+                visionInterface.style.opacity = 0;
+                setTimeout(() => {
+                    visionInterface.style.display = 'none';
+                    chatInterface.style.display = 'flex';
+                    
+                    // Actualizar barra de navegación
+                    navVision.classList.remove('active');
+                    navChat.classList.add('active');
+                    
+                    // Apagar cámara para ahorrar batería
+                    if (cameraStream) {
+                        cameraStream.getTracks().forEach(track => track.stop());
+                        cameraStream = null;
+                        videoElement.srcObject = null;
+                    }
+                }, 500);
+            }
         }
     </script>
 </body>
