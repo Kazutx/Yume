@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>YUME Project</title>
+    <style>
+        /* Estilo base - Fondo negro total */
+        body, html {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* Contenedor de textos centrales */
+        .display-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding-top: 20px;
+        }
+
+        .yume-title {
+            font-size: 60px;
+            font-weight: bold;
+            color: #ff007f;
+            text-shadow: 0 0 20px #ff007f, 0 0 40px #ff007f;
+            margin: 0;
+        }
+
+        .greeting { font-size: 20px; margin: 10px 0; }
+
+        .status-active {
+            font-size: 28px;
+            font-weight: bold;
+            color: #00d4ff;
+            text-shadow: 0 0 15px #00d4ff;
+            text-transform: uppercase;
+        }
+
+        .web-info { color: #00ff88; font-size: 15px; margin-bottom: 20px; }
+        .thinking { color: #333333; font-size: 18px; }
+
+        /* BARRA DE ESCRITURA - RETOCADA */
+        .input-wrapper {
+            width: 100%;
+            padding-bottom: 80px; /* Posición más arriba para evitar recortes */
+            display: flex;
+            justify-content: center;
+        }
+
+        .pill-box {
+            width: 85%; /* Un poco más pequeña */
+            max-width: 350px;
+            background: #121212;
+            border-radius: 40px;
+            border: 1px solid #222;
+            padding: 4px 6px 4px 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-size: 14px; /* Texto interno más pequeño */
+            outline: none;
+            height: 35px;
+        }
+
+        /* BOTÓN ENVIAR PEQUEÑO */
+        .btn-enviar {
+            background-color: #00d4ff;
+            color: #000000;
+            border: none;
+            padding: 8px 15px; /* Más pequeño */
+            border-radius: 20px;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 11px; /* Letra más pequeña */
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="display-area">
+        <h1 class="yume-title">YUME</h1>
+        <p class="greeting">Hola, Padre.</p>
+        <div class="status-active">SISTEMA ACTIVO</div>
+        <p class="web-info">[ Conectado página web ]</p>
+        <div class="thinking">Pensando...</div>
+    </div>
+
+    <div class="input-wrapper">
+        <div class="pill-box">
+            <input type="text" id="userInput" placeholder="¿Qué necesitas hoy?">
+            <button class="btn-enviar" onclick="validarYume()">ENVIAR</button>
+        </div>
+    </div>
+
+    <script>
+        function validarYume() {
+            const pass = document.getElementById('userInput').value;
+            // Nueva contraseña establecida
+            if(pass === "Yume2841") {
+                alert("Acceso confirmado. Bienvenido, Padre.");
+            } else if (pass.trim() !== "") {
+                // Aquí iría la lógica para enviar mensajes normales después
+                console.log("Comando recibido: " + pass);
+            }
+        }
+    </script>
+
+</body>
+</html>
