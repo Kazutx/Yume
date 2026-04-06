@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>YUME</title>
+    <style>
+        /* Base */
+        body, html {
+            background-color: #000;
+            color: #fff;
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0; padding: 0;
+            height: 100%; width: 100%;
+            display: flex; flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* PANTALLA DE BLOQUEO */
+        #lock-screen {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: #000;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            z-index: 999;
+        }
+
+        .lock-title {
+            color: #ff007f;
+            font-size: 40px;
+            text-shadow: 0 0 15px #ff007f;
+            margin-bottom: 20px;
+        }
+
+        .lock-input {
+            background: #1a1a1a;
+            border: 1px solid #ff007f;
+            color: #fff;
+            padding: 12px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 18px;
+            outline: none;
+            margin-bottom: 15px;
+        }
+
+        /* INTERFAZ PRINCIPAL (OCULTA AL INICIO) */
+        #main-ui {
+            display: none; /* Se activa con la clave */
+            flex-direction: column;
+            height: 100%; width: 100%;
+        }
+
+        .center-logo {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .yume-text {
+            font-size: 75px;
+            font-weight: bold;
+            color: #ff007f;
+            text-shadow: 0 0 25px #ff007f, 0 0 45px #ff007f;
+            margin: 0;
+            letter-spacing: 3px;
+        }
+
+        /* BARRA DE ESCRITURA (DISEÑO PERFECTO) */
+        .footer {
+            width: 100%;
+            padding-bottom: 80px; /* Elevada para tu Tecno Spark */
+            display: flex;
+            justify-content: center;
+        }
+
+        .pill {
+            width: 90%;
+            max-width: 400px;
+            background: #111;
+            border-radius: 40px;
+            border: 1px solid #333;
+            padding: 5px 5px 5px 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 17px;
+            outline: none;
+        }
+
+        .btn-enviar {
+            background: #00d4ff;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 13px;
+            text-transform: uppercase;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="lock-screen">
+        <h1 class="lock-title">SISTEMA YUME</h1>
+        <input type="password" id="pass" class="lock-input" placeholder="Contraseña">
+        <button class="btn-enviar" onclick="login()">ENTRAR</button>
+    </div>
+
+    <div id="main-ui">
+        <div class="center-logo">
+            <h1 class="yume-text">YUME</h1>
+        </div>
+
+        <div class="footer">
+            <div class="pill">
+                <input type="text" placeholder="¿Qué necesitas hoy?">
+                <button class="btn-enviar">ENVIAR</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function login() {
+            const p = document.getElementById('pass').value;
+            if(p === "Yume2841") {
+                document.getElementById('lock-screen').style.display = 'none';
+                document.getElementById('main-ui').style.display = 'flex';
+            } else {
+                alert("Contraseña Incorrecta");
+            }
+        }
+    </script>
+</body>
+</html>
